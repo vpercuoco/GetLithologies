@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewData["Title"] = "APIView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model GetLithologies.Models.DescriptionRequestModel
+
+<div class="container float-left">
+    <h1>APIView</h1>
+    <p></p>
+    <ul class="list-group">
+        <li class="list-group-item">Expeditions=374,369</li>
+        <li class="list-group-item">Sites=U1521,U1522,U1513,U1514</li>
+        <li class="list-group-item">Holes=A,B,C,D,E</li>
+        <li class="list-group-item">Cores=1,2,3,10,8</li>
+        <li class="list-group-item">CoreTypes=H,R,X</li>
+    </ul>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+</div>
+
+
+<div class="container float-left">
+    <h1>Example API query routes:</h1>
+    @{
+        var parms = new Dictionary<string, string>
+{
+                { "Expedition", "374" }
+
+            };
+    }
+    <a asp-controller="LithologyTables" asp-action="GetDescriptions" asp-all-route-data="parms"> /LithologyTables/GetDescriptions?Expeditions=374</a>
+
+    <br />
+    @{
+        parms = new Dictionary<string, string>
+{
+                { "Expeditions", "369" },
+                { "Holes", "B,C" }
+
+            };
+    }
+    <a asp-controller="LithologyTables" asp-action="GetDescriptions" asp-all-route-data="parms"> /LithologyTables/GetDescriptions?Expeditions=369&Holes=B,C</a>
+    <br />
+    @{
+        parms = new Dictionary<string, string>
+{
+                { "Expeditions", "374,369" },
+                { "Holes", "A,C" },
+                {"Types","H" },
+                {"Cores","1" }
+
+            };
+    }
+    <a asp-controller="LithologyTables" asp-action="GetDescriptions" asp-all-route-data="parms"> /LithologyTables/GetDescriptions?Expeditions=374,369&Holes=A,C&Types=H&Cores=1</a>
+</div>

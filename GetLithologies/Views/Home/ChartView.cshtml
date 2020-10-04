@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewData["Title"] = "ChartView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*
+    @model Dictionary<string, string>
+*@
+<div class="container-fluid float-left mt-3 mb-5">
+    <h1 class="display-4">ChartView</h1>
+    <button class="btn btn-primary" id="btnGetPrefices"> Show Prefix Lithologies</button>
+    <button class="btn btn-primary" id="btnGetPrincipals"> Show Principal Lithologies</button>
+    <button class="btn btn-primary" id="btnGetSuffices"> Show Suffix Lithologies</button>
+    <div>
+        <canvas class="my-4" id="myChart" width="900" height="380"></canvas>
+    </div>
+
+    @*
+        @foreach (var item in Model)
+        {
+            <a>@item.Key, @item.Value</a>
+        }
+    *@
+</div>
+
+@section Scripts{
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+
+    <script>
+
+        $(document).ready(function ()
+        {
+            var ctx = document.getElementById("myChart");
+            var keys = [];
+            var values = [];
+
+            var myLineChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: keys,
+                    datasets: [{
+                        data: values,
+                        lineTension: 0,
+                        backgroundColor: 'transparent',
+                        borderColor: '#007bff',
+                        borderWidth: 2,
+                        pointBackgroundColor: '#007bff'
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: false
+                            }
+                        }]
+                    },
+                    legend: {
+                        display: false,
+                    }
+                }
+            });
+
+          function UpdateChartFunction(myActionMethodName)
+          {
+            var link = "@Url.Action("GetPrincipalsAndCount", "LithologyTables")";
+              link = link.replace("GetPrincipalsAndCount", myActionMethodName);
+            $.ajax({
+                type: 'GET',
+                url:  link,
+                //data: JSON.stringify(dataJSON), //Not including data, works for api methods with 0 arguments
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result, status, xhr)
+                {
+                    myLineChart.data.labels = result.lithologyIdentifiers;
+
+                    myLineChart.data.datasets.forEach((dataset) => {
+                        dataset.data = result.countOfLithologyIdentifiers;
+                    });
+                    myLineChart.update();
+                        //myChart.update();
+                },
+                error: function (xhr, status, error) { alert("Translation Table Update Error"); }
+
+          });
+            }
+
+            UpdateChartFunction("GetPrincipalsAndCount");
+            //Idiosyncrasy of javascript, function calls have to be placed in a callback function.
+            document.getElementById('btnGetSuffices').addEventListener('click', function () { UpdateChartFunction("GetSufficesAndCount") });
+            document.getElementById('btnGetPrincipals').addEventListener('click', function () { UpdateChartFunction("GetPrincipalsAndCount") });
+            document.getElementById('btnGetPrefices').addEventListener('click', function () { UpdateChartFunction("GetPreficesAndCount") });
+        });
+
+
+
+    </script>
+}

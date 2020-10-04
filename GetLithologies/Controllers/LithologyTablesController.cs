@@ -83,13 +83,138 @@ namespace GetLithologies.Controllers
         }
 
         #endregion
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<string>>> PrefixLithologies()
+        {
+            try
+            {
+                var result = await _repo.LithologyTables.Select(x => x.PrefixLithology).Distinct().OrderBy(x=>x).ToListAsync();
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<string>>> PrincipalLithologies()
+        {
+            try
+            {
+                var result = await _repo.LithologyTables.Select(x => x.PrincipalLithology).Distinct().OrderBy(x => x).ToListAsync();
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet]
+        public async Task<ActionResult<LithologyCountModel>> GetPrincipalsAndCount()
+        {
+            try
+            {
+
+                var result = await _repo.LithologyTables
+                    .GroupBy(x => x.PrincipalLithology)
+                    .Select(x => new
+                    {
+                        x.Key,
+                        Count = x.Count().ToString()
+                    })
+                    .ToDictionaryAsync(x => x.Key, x => x.Count);
+
+                var returnModel = new LithologyCountModel();
+                returnModel.LithologyIdentifiers = result.Keys;
+                returnModel.CountOfLithologyIdentifiers = result.Values;
+
+                return returnModel;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet]
+        public async Task<ActionResult<LithologyCountModel>> GetPreficesAndCount()
+        {
+            try
+            {
+
+                var result = await _repo.LithologyTables
+                    .GroupBy(x => x.PrefixLithology)
+                    .Select(x => new
+                    {
+                        x.Key,
+                        Count = x.Count().ToString()
+                    })
+                    .ToDictionaryAsync(x => x.Key, x => x.Count);
+
+                var returnModel = new LithologyCountModel();
+                returnModel.LithologyIdentifiers = result.Keys;
+                returnModel.CountOfLithologyIdentifiers = result.Values;
+
+                return returnModel;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpGet]
+        public async Task<ActionResult<LithologyCountModel>> GetSufficesAndCount()
+        {
+            try
+            {
+
+                var result = await _repo.LithologyTables
+                    .GroupBy(x => x.SuffixLithology)
+                    .Select(x => new
+                    {
+                        x.Key,
+                        Count = x.Count().ToString()
+                    })
+                    .ToDictionaryAsync(x => x.Key, x => x.Count);
+
+                var returnModel = new LithologyCountModel();
+                returnModel.LithologyIdentifiers = result.Keys;
+                returnModel.CountOfLithologyIdentifiers = result.Values;
+
+                return returnModel;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<string>>> SuffixLithologies()
+        {
+            try
+            {
+                var result = await _repo.LithologyTables.Select(x => x.SuffixLithology).Distinct().OrderBy(x => x).ToListAsync();
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<LithologySectionInfoModel>>> GetDescriptions([FromQuery] DescriptionRequestModel request)
         {
+            //https://localhost:44389/api/LithologyTables/GetDescriptions?Expeditions=369&Holes=B,C&Prefices=clayey
             try
             {
-                var records = await _repo.Sections.WhereIf(request.ExpeditionsCollection.Count !=0, x=>request.ExpeditionsCollection.Contains(x.Expedition))
+                var records = await _repo.Sections.WhereIf(request.ExpeditionsCollection.Count != 0, x => request.ExpeditionsCollection.Contains(x.Expedition))
                                                   .WhereIf(request.SitesCollection.Count != 0, x => request.SitesCollection.Contains(x.Site))
                                                   .WhereIf(request.HolesCollection.Count != 0, x => request.HolesCollection.Contains(x.Hole))
                                                   .WhereIf(request.CoresCollection.Count != 0, x => request.CoresCollection.Contains(x.Core))
@@ -97,6 +222,9 @@ namespace GetLithologies.Controllers
                                                   .Include(x => x.LithologicDescriptions)
                                                   .ThenInclude(x => x.LithologyTable)
                                                   .SelectMany(x => x.LithologicDescriptions)
+                                                  .WhereIf(request.PreficesCollection.Count != 0, x => request.PreficesCollection.Contains(x.LithologyTable.PrefixLithology))
+                                                  .WhereIf(request.PrincipalsCollection.Count != 0, x => request.PrincipalsCollection.Contains(x.LithologyTable.PrincipalLithology))
+                                                  .WhereIf(request.SufficesCollection.Count != 0, x => request.SufficesCollection.Contains(x.LithologyTable.SuffixLithology))
                                                   .Select(x => new LithologySectionInfoModel(x.LithologyTable, x.SectionInfo))
                                                   .ToListAsync();
                 return records;

@@ -16,6 +16,26 @@ namespace GetLithologies.Models
         public string Cores { get; set; } = string.Empty;
         public string CoreTypes { get; set; } = string.Empty;
 
+        public string Prefices { get; set; } = string.Empty;
+        public string Principals { get; set; } = string.Empty;
+        public string Suffices { get; set; } = string.Empty;
+
+
+        public ICollection<string> PreficesCollection
+        {
+            get { return SplitString(Prefices); }
+            set {; }
+        }
+        public ICollection<string> PrincipalsCollection
+        {
+            get { return SplitString(Principals); }
+            set {; }
+        }
+        public ICollection<string> SufficesCollection
+        {
+            get { return SplitString(Suffices); }
+            set {; }
+        }
 
         public ICollection<string> SectionTextIDsCollection
         {
@@ -68,7 +88,8 @@ namespace GetLithologies.Models
 
             foreach (string entry in inputString.Split(new[] { " ", ",", Environment.NewLine, "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries))
             {
-                returnCollection.Add(entry);
+                string correctedForSpacing = entry.Replace("%20", " ");
+                returnCollection.Add(correctedForSpacing);
             }
             return returnCollection;
         }

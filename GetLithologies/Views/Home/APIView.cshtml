@@ -5,21 +5,20 @@
 }
 @model GetLithologies.Models.DescriptionRequestModel
 
-<div class="container float-left">
-    <h1>APIView</h1>
-    <p></p>
+<div class="container float-left mt-3 mb-5">
+    <h1 class="display-4">Description API</h1>
+    <p>Concatenate text filters like those listed below into a single string to query the api. Use <strong>"%20"</strong> to designate spaces in a query string. These webcalls can be used in other applications.</p>
     <ul class="list-group">
-        <li class="list-group-item">Expeditions=374,369</li>
-        <li class="list-group-item">Sites=U1521,U1522,U1513,U1514</li>
-        <li class="list-group-item">Holes=A,B,C,D,E</li>
-        <li class="list-group-item">Cores=1,2,3,10,8</li>
-        <li class="list-group-item">CoreTypes=H,R,X</li>
+        <li class="list-group-item list-group-item-primary">api/LithologyTables/GetDescriptions?<strong>Expeditions</strong>=374,369&<strong>Sites</strong>=U1521,U1522,U1513,U1514&<strong>Holes</strong>=A,B,C,D,E&<strong>Cores</strong>=1,2,3,10,8&<strong>CoreTypes</strong>=H,R,X </li>
+        <li class="list-group-item"><strong>Expeditions</strong>=374,369</li>
+        <li class="list-group-item"><strong>Sites</strong>=U1521,U1522,U1513,U1514</li>
+        <li class="list-group-item"><strong>Holes</strong>=A,B,C,D,E</li>
+        <li class="list-group-item"><strong>Cores</strong>=1,2,3,10,8</li>
+        <li class="list-group-item"><strong>CoreTypes</strong>=H,R,X</li>
+        <li class="list-group-item disabled"><strong>Prefices</strong>=clayey,foraminifer%20rich,foraminifer-rich,siderite</li>
+        <li class="list-group-item disabled"><strong>Principals</strong>=clay,mudstone,sandstone,silty%20clay,silty%20sand</li>
+        <li class="list-group-item disabled"><strong>Suffices</strong>=agglomerate,with%20sponge%20spicules,with%20chert</li>
     </ul>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
 </div>
 
 
@@ -28,11 +27,11 @@
     @{
         var parms = new Dictionary<string, string>
 {
-                { "Expedition", "374" }
+                { "Expeditions", "374" }
 
             };
     }
-    <a asp-controller="LithologyTables" asp-action="GetDescriptions" asp-all-route-data="parms"> /LithologyTables/GetDescriptions?Expeditions=374</a>
+    <a asp-controller="LithologyTables" asp-action="GetDescriptions" asp-all-route-data="parms"> api/LithologyTables/GetDescriptions?Expeditions=374</a>
 
     <br />
     @{
@@ -43,7 +42,7 @@
 
             };
     }
-    <a asp-controller="LithologyTables" asp-action="GetDescriptions" asp-all-route-data="parms"> /LithologyTables/GetDescriptions?Expeditions=369&Holes=B,C</a>
+    <a asp-controller="LithologyTables" asp-action="GetDescriptions" asp-all-route-data="parms"> api/LithologyTables/GetDescriptions?Expeditions=369&Holes=B,C</a>
     <br />
     @{
         parms = new Dictionary<string, string>
@@ -55,5 +54,48 @@
 
             };
     }
-    <a asp-controller="LithologyTables" asp-action="GetDescriptions" asp-all-route-data="parms"> /LithologyTables/GetDescriptions?Expeditions=374,369&Holes=A,C&Types=H&Cores=1</a>
+    <a asp-controller="LithologyTables" asp-action="GetDescriptions" asp-all-route-data="parms"> api/LithologyTables/GetDescriptions?Expeditions=374,369&Holes=A,C&Types=H&Cores=1</a>
+    <br />
+    @{
+        parms = new Dictionary<string, string>
+{
+                { "Expeditions", "374,369" },
+                { "Holes", "A,C" },
+                {"Types","H" },
+                {"Prefices","clayey" }
+
+            };
+    }
+    <a asp-controller="LithologyTables" asp-action="GetDescriptions" asp-all-route-data="parms"> api/LithologyTables/GetDescriptions?Expeditions=374,369&Holes=A,C&Prefices=clayey</a>
+    <br />
+    @{
+        parms = new Dictionary<string, string>
+{
+                { "Expeditions", "374,369" },
+                { "Holes", "B,C" },
+                {"Principals", "clay,claystone" }
+
+            };
+    }
+    <a asp-controller="LithologyTables" asp-action="GetDescriptions" asp-all-route-data="parms"> api/LithologyTables/GetDescriptions?Expeditions=374,369&Holes=B,C&Principals=clay,claystone</a>
+    <br />
+    @{
+        parms = new Dictionary<string, string>
+{
+                {"Principals", "clay,claystone" }
+
+            };
+    }
+    <a asp-controller="LithologyTables" asp-action="GetDescriptions" asp-all-route-data="parms"> api/LithologyTables/GetDescriptions?Principals=clay,claystone</a>
+    <br />
+    @{
+        parms = new Dictionary<string, string>
+{
+                { "Prefices","nannofossil-rich,NA"},
+                {"Principals", "clay,mudstone,claystone,diatomite" },
+                { "Suffices","with%20sponge%20spicules"}
+
+            };
+    }
+<a asp-controller="LithologyTables" asp-action="GetDescriptions" asp-all-route-data="parms"> api/LithologyTables/GetDescriptions?Prefices=nannofossil-rich,NA&Principals=clay,mudstone,claystone,diatomite&Suffices=with%20sponge%20spicules</a>
 </div>

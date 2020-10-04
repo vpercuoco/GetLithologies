@@ -7,101 +7,96 @@
     //TODO: Figure out why the link below is not clickable
 }
 @model GetLithologies.Models.DescriptionRequestModel
-
-
-
-<br />
+<!--
 <div class="container-fluid">
-    <!-- Basic dropdown -->
-    <button class="btn btn-primary dropdown-toggle mr-4" type="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-        Expedition
-    </button>
+<button class="btn btn-primary dropdown-toggle mr-4" type="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+    Expedition
+</button>
 
-    <div class="dropdown-menu">
-        <a class="dropdown-item">
-            <!-- Default unchecked -->
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="checkbox1">
-                <label class="custom-control-label" for="checkbox1">Check me</label>
-            </div>
-        </a>
-        <a class="dropdown-item" href="#">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="checkbox2">
-                <label class="custom-control-label" for="checkbox2">Check me</label>
-            </div>
-        </a>
-        <a class="dropdown-item" href="#">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="checkbox3">
-                <label class="custom-control-label" for="checkbox3">Check me</label>
-            </div>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="checkbox4">
-                <label class="custom-control-label" for="checkbox4">Check me</label>
-            </div>
-        </a>
-    </div>
-    <!-- Basic dropdown -->
+<div class="dropdown-menu">
+    <a class="dropdown-item">
 
-</div>
-<br />
-<br />
-
-<div class="container container-fluid float-left">
-    <div>
-        <h3>Enter textids to query description information </h3>
-    </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">Enter TextIDs</span>
-            </div>
-            <textarea id="my-textarea" type="text" class="form-control custom-select-lg" asp-for="SectionTextIDs" style="height:100px" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                </textarea>
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="checkbox1">
+            <label class="custom-control-label" for="checkbox1">Check me</label>
         </div>
-        <button class="btn btn-primary" type="button" id="submit-button">Submit</button>
- 
-    <br />
-    <br />
+    </a>
+    <a class="dropdown-item" href="#">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="checkbox2">
+            <label class="custom-control-label" for="checkbox2">Check me</label>
+        </div>
+    </a>
+    <a class="dropdown-item" href="#">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="checkbox3">
+            <label class="custom-control-label" for="checkbox3">Check me</label>
+        </div>
+    </a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="#">
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="checkbox4">
+            <label class="custom-control-label" for="checkbox4">Check me</label>
+        </div>
+    </a>
+</div>
+</div>
+-->
+
+<div class="container container-fluid float-left mt-3 mb-5">
+    <h1 class="display-4">Description Search</h1>
+    <p>Enter a list of section textids to search for description records. Spaces, newlines, and commas are valid delimeters. </p>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default"><strong>Enter TextIDs</strong></span>
+        </div>
+        <textarea id="my-textarea" type="text" class="form-control custom-select-lg mr-5" asp-for="SectionTextIDs"  aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </textarea>
+
+        <ul class="list-group d-flex" >
+            <li class="list-group-item"><strong>Example TextIDS</strong></li>
+            <li class="list-group-item py-2">SHLF9285161</li>
+            <li class="list-group-item py-2">SHLF9281291</li>
+            <li class="list-group-item py-2">SHLF9284451</li>
+            <li class="list-group-item py-2">SHLF9285131</li>
+            <li class="list-group-item py-2">SHLF9282201</li>
+            <li class="list-group-item py-2">SHLF9283311</li>
+        </ul>
+
+    </div>
+    <button class="btn btn-primary" type="button" id="submit-button">Get Descriptions</button>
 </div>
 
-<div class="container-fluid"></div>
 <div class="d-flex container-fluid">
-    <div>
-        <div class="bg-light border-right">
-            <section>
-                <div class="text-center">
-                    <div class="col-12 border p-3">
-                        <input id="myInput" class="form-control" type="text" placeholder="Search.." />
-                        <table id="resultTable" class="table table-striped table-bordered" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>Expedition</th>
-                                    <th>Site</th>
-                                    <th>Hole</th>
-                                    <th>Core</th>
-                                    <th>Type</th>
-                                    <th>Section</th>
-                                    <th>Top Offset (cm)</th>
-                                    <th>Bottom Offset (cm)</th>
-                                    <th>Prefix Lithology</th>
-                                    <th>Principal Lithology</th>
-                                    <th>Suffix Lithology</th>
-                                    <th>Section TextID</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+    <div class="bg-light border-right">
+        <div class="text-center">
+            <div class="col-12 border p-3">
+                <input id="myInput" class="form-control mb-3" type="text" placeholder="Search.." />
+                <table id="resultTable" class="table table-striped table-bordered" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Expedition</th>
+                            <th>Site</th>
+                            <th>Hole</th>
+                            <th>Core</th>
+                            <th>Type</th>
+                            <th>Section</th>
+                            <th>Top Offset (cm)</th>
+                            <th>Bottom Offset (cm)</th>
+                            <th>Prefix Lithology</th>
+                            <th>Principal Lithology</th>
+                            <th>Suffix Lithology</th>
+                            <th>Section TextID</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

@@ -4,10 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-
-
     <link href="~/css/bootstrap.min.css" rel="stylesheet" />
-
 </head>
 <body>
     <header>
@@ -18,11 +15,21 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
+                    <a class="nav-item nav-link active">| <span class="sr-only">(current)</span></a>
                     <a class="nav-item nav-link active" asp-controller="Home" asp-action="Index">Get Descriptions by TextID <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link active">| <span class="sr-only">(current)</span></a>
                     <a class="nav-item nav-link active" asp-controller="Home" asp-action="APIView">API View <span class="sr-only">(current)</span></a>
-
+                    <a class="nav-item nav-link active">| <span class="sr-only">(current)</span></a>
                     <a class="nav-item nav-link" href="#">Disabled Link</a>
-                    <a class="nav-item nav-link disabled" href="#">Disabled Link</a>
+                    <a class="nav-item nav-link active">| <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link active" asp-controller="Home" asp-action="ChartView">ChartView</a>
+                    <a class="nav-item nav-link active">| <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link active" asp-controller="LithologyTables" asp-action="PrefixLithologies">Prefix Lithologies <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link active">| <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link active" asp-controller="LithologyTables" asp-action="PrincipalLithologies">Principal Lithologies <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link active">| <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link active" asp-controller="LithologyTables" asp-action="SuffixLithologies">Suffix Lithologies <span class="sr-only">(current)</span></a>
+
                 </div>
             </div>
         </nav>

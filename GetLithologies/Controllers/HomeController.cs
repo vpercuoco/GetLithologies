@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using GetLithologies.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace GetLithologies.Controllers
 {
@@ -11,15 +12,29 @@ namespace GetLithologies.Controllers
     [Controller]
     public class HomeController : Controller
     {
+        private readonly IDataRepository _repo;
+
+        public HomeController(IDataRepository repo)
+        {
+            _repo = repo;
+        }
+
         public IActionResult Index()
         {
-            var x = new HierarchyLookupStateModel();
+     
             return View();
         }
         public IActionResult APIView()
         {
-            var x = new HierarchyLookupStateModel();
+     
             return View();
+        }
+        public IActionResult ChartView()
+        {
+
+            return View();
+
+            
         }
     }
 }
